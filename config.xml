@@ -7,10 +7,10 @@
 
     <!-- versionCode is optional and Android only -->
 
-    <name>Roller Derby Test O'Matic Lite</name>
+    <name>RDTOM Lite</name>
 
     <description>
-        RDTOM's Free App
+        The Roller Derby Test O'Matic free app. Random questions to help you learn the WFTDA rules of flat track roller derby.
     </description>
 
     <author href="http://rollerderbytestomatic.com/" email="contact@rollerderbytestomatic.com">
