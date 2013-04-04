@@ -3,7 +3,7 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.rollerderbytestomatic.lite"
         versionCode="10" 
-        version   = "0.0.1">
+        version   = "0.1">
 
     <!-- versionCode is optional and Android only -->
 
@@ -17,4 +17,9 @@
         John Kershaw
     </author>
 
+    <icon src="icon.png" />
+    <gap:splash src="icon.png" />
+    
+    <preference name="permissions" 
+        	value="none"/>
 </widget>
