@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html manifest="cache.manifest">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>RDTOM App Lite</title>
@@ -9,16 +9,24 @@
 
 <script src="jquery-1.9.1.min.js" type="text/javascript"></script>
 <script src="jquery-ui-1.10.2.custom.js" type="text/javascript"></script>
+<script src="defaultquestions.js" type="text/javascript"></script>
 
 
 </head>
 <body>
 
-
-<div id="page_question">
-	<h1>Roller Derby Test O'Matic (Lite)</h1>
-	<h2>Turn left and learn the rules.</h2>
+<h1>Roller Derby Test O'Matic (Lite)</h1>
+<h2>Turn left and learn the rules.</h2>
 	
+<div id="page_start">
+
+	<p style="text-align:center"><img id="starticon"  src="RDTOM_touch_icon.png"/></p>
+	<p style="text-align:center"><a id="startbutton" class="button mobilebutton" onclick="initiatequestions()">Start</a></p>
+	<p style="text-align:center" id="initiatingtext"></p>
+</div>
+
+<div id="page_question" style="display:none;">
+
 	<p id="question"></p>
 	
 	<ol type="A" id="answers">
@@ -35,19 +43,88 @@
 
 <script type="text/javascript">
 
-var questions;
+var data_questions;
 
 var have_answered = false;
 
 function initiatequestions()
 {
-	// can we load from the server?
-			
-	// can we use localstorage?
-	//http://coding.smashingmagazine.com/2010/10/11/local-storage-and-how-to-use-it/
+	$("#startbutton").hide();
+	$("#starticon").hide();
+	$("#initiatingtext").show();
 	
-	// if none of the above, load the default data
+	$("#initiatingtext").append("Online status: ");
+	
+	// can we load from the server?
+	if (navigator.onLine) 
+	{
+		$("#initiatingtext").append("Connected!<br />");
+		$("#initiatingtext").append("Downloading updates<br />");
+		
+		// load questions
+		// TODO Callback in ajax call
+		$.ajax({  
+		    url: "http://rollerderbytestomatic.com/api/0.1/jsonp/questions/?callback=callback",  
+		    dataType: "jsonp", 
+		    timeout: 5000,
+		    success: function(data) { 
+		    	$("#initiatingtext").append("Updates Loaded<br />");
+		    	localStorage.setItem('data_questions',JSON.stringify(data));
+		    	$("#initiatingtext").append("Local cache updated<br />");
+		    	$("#initiatingtext").append("Reticulating Splines<br />");
+		    	
+				loadfromlocal();
+		    } ,
+		    error: function(xhr, textStatus, errorThrown){
+		    	$("#initiatingtext").append("No updates available<br />");
+				loadfromlocal();
+		    }
+		});  
+		// save to cache
+		
+	}
+	else
+	{
+		$("#initiatingtext").append("Offline<br />");
+		loadfromlocal();
+	}
+
+	
 }
+
+function loadfromlocal()
+{
+	
+	// can we use localstorage?
+	$("#initiatingtext").append("Local storage: ");
+	
+	data_questions = JSON.parse(localStorage.getItem('data_questions'));
+	
+	if (data_questions)
+	{
+		$("#initiatingtext").append("Loaded<br />");
+	}
+	else
+	{
+		// if none of the above, load the default data
+		$("#initiatingtext").append("Missing<br />");
+		$("#initiatingtext").append("Using the default file<br />");
+    	localStorage.setItem('data_questions',JSON.stringify(default_questions));
+    	$("#initiatingtext").append("Local cache has been updated<br />");
+    	data_questions = default_questions;
+    	
+		
+	}
+	
+	// questions is now an array of JS objects representing questions
+	
+	$("#initiatingtext").append("Questions loaded: " + data_questions.resource.questions.question.length + "<br />");
+	
+	$("#page_start").fadeOut('fast', function() {
+		$("#page_question").fadeIn();
+	});
+}
+
 // load a new question
 function loadquestion()
 {
@@ -56,31 +133,31 @@ function loadquestion()
 	// get rid of the old answers
 	$("#answers").html("");
 
+	question_data = data_questions.resource.questions.question[Math.floor(Math.random() *  data_questions.resource.questions.question.length)];
+	
 	$("#question").html("Loading ... ");
+	
 	// get the new question
+	showquestion(question_data)
 
-	$.ajax({  
-	    url: "http://rollerderbytestomatic.com/api/0.1/jsonp/question/?callback=callback",  
-	    dataType: "jsonp",  
-	    success: function(data) { jsnop_callback(data);}  
-	});  
 	
 }
+
 
 var answered = false;
 var correct_answer = 0;
 
-function jsnop_callback(data)
+function showquestion(data)
 {
 	answered = false;
 	// show the new question text
 	
-	$("#question").html(unescape((data.resource.question.text).replace(/\\(.)/mg, "$1")));
+	$("#question").html(unescape((data.text).replace(/\\(.)/mg, "$1")));
 
 	$("#answers").html();
 	
 	// load each new answer
-	$.each(data.resource.question.answers.answer, function(key, answer) 
+	$.each(data.answers.answer, function(key, answer) 
 	{
 		if (answer.correct == "true")
 		{

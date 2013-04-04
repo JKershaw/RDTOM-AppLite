@@ -1,0 +1,13 @@
+CACHE MANIFEST
+# the above line is required
+
+NETWORK:
+*
+
+CACHE:
+defaultquestions.js
+index.htm
+jquery-1.9.1.min.js
+jquery-ui-1.10.2.custom.js
+RDTOM_touch_icon.png
+style.css
