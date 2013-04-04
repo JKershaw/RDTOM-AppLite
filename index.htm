@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>RDTOM App Lite</title>
+<link rel="stylesheet" href="style.css" type="text/css" >
+
+<meta name="viewport" content="width=device-width" >
+
+<script src="jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="jquery-ui-1.10.2.custom.js" type="text/javascript"></script>
+
+
+</head>
+<body>
+
+
+<div id="page_question">
+	<h1>Roller Derby Test O'Matic (Lite)</h1>
+	<h2>Turn left and learn the rules.</h2>
+	
+	<p id="question"></p>
+	
+	<ol type="A" id="answers">
+	</ol>
+
+<p>
+	<a class="button mobilebutton" onclick="loadquestion()">New question</a>
+</p>
+
+	
+	
+</div>
+
+
+<script type="text/javascript">
+
+var questions;
+
+var have_answered = false;
+
+function initiatequestions()
+{
+	// can we load from the server?
+			
+	// can we use localstorage?
+	//http://coding.smashingmagazine.com/2010/10/11/local-storage-and-how-to-use-it/
+	
+	// if none of the above, load the default data
+}
+// load a new question
+function loadquestion()
+{
+	have_answered = false;
+	
+	// get rid of the old answers
+	$("#answers").html("");
+
+	$("#question").html("Loading ... ");
+	// get the new question
+
+	$.ajax({  
+	    url: "http://rollerderbytestomatic.com/api/0.1/jsonp/question/?callback=callback",  
+	    dataType: "jsonp",  
+	    success: function(data) { jsnop_callback(data);}  
+	});  
+	
+}
+
+var answered = false;
+var correct_answer = 0;
+
+function jsnop_callback(data)
+{
+	answered = false;
+	// show the new question text
+	
+	$("#question").html(unescape((data.resource.question.text).replace(/\\(.)/mg, "$1")));
+
+	$("#answers").html();
+	
+	// load each new answer
+	$.each(data.resource.question.answers.answer, function(key, answer) 
+	{
+		if (answer.correct == "true")
+		{
+			correct_answer = answer.id;
+			$("#answers").append("<li><a class=\"mobilebutton\" onclick=\"select_answer(" + answer.id + ");\">" + (answer.text).replace(/\\(.)/mg, "$1") + "</a> <span style=\"display:none;\" class=\"correct_answer_win\"><strong>You Win!</strong></span><span style=\"display:none;\" class=\"correct_answer\"><strong> The correct answer.</strong></span></li>");
+		}
+		else
+		{
+			$("#answers").append("<li><a class=\"mobilebutton\" onclick=\"select_answer(" + answer.id + ");\">" + (answer.text).replace(/\\(.)/mg, "$1") + "</a> <span style=\"display:none;\" class=\"wrong_answer\" id=\"wrong_answer" + answer.id + "\"><strong>Wrong!</strong></span></li>");
+		}
+			
+	 });
+}
+
+
+function select_answer(selected)
+{
+	if (!answered)
+	{
+		// make sure we only answer once
+		answered = true;
+
+		// show what was right and what was wrong
+		if (selected == correct_answer)
+		{
+			// correct!
+			$(".correct_answer_win").show();
+			$('body').effect("highlight", {color:"#00FF00"}, 1000);
+		}
+		else
+		{
+			// wrong!
+			$(".correct_answer").show();
+			$("#wrong_answer" + selected).show();
+			$('body').effect("highlight", {color:"#FF0000"}, 1000);
+		}
+
+		//<?php if ($question->get_Notes()) {?>
+		// show the notes
+		//$(".question_notes").show();
+		//<?php } ?>
+		
+	}
+}
+
+</script>
+
+</body>
+</html>
