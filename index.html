@@ -5,7 +5,7 @@
 <title>RDTOM App Lite</title>
 <link rel="stylesheet" href="style.css" type="text/css" >
 
-<meta name="viewport" content="width=device-width" >
+<meta name="viewport" content="width=device-width" >	
 
 <script src="jquery-1.9.1.min.js" type="text/javascript"></script>
 <script src="jquery-ui-1.10.2.custom.js" type="text/javascript"></script>
@@ -59,7 +59,7 @@ function initiatequestions()
 	if (navigator.onLine) 
 	{
 		$("#initiatingtext").append("Connected!<br />");
-		$("#initiatingtext").append("Downloading updates<br />");
+		$("#initiatingtext").append("Checking for updates<br />");
 		
 		// load questions
 		// TODO Callback in ajax call
@@ -98,7 +98,19 @@ function loadfromlocal()
 	// can we use localstorage?
 	$("#initiatingtext").append("Local storage: ");
 	
-	data_questions = JSON.parse(localStorage.getItem('data_questions'));
+	try
+	{
+		if (localStorage.getItem('data_questions'))
+		{
+			data_questions = JSON.parse(localStorage.getItem('data_questions'));
+		}
+	}
+	catch(err)
+	{
+		$("#initiatingtext").append("(Nope) ");
+	}
+	
+	
 	
 	if (data_questions)
 	{
