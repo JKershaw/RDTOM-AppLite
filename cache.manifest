@@ -6,7 +6,7 @@ NETWORK:
 
 CACHE:
 defaultquestions.js
-index.htm
+index.html
 jquery-1.9.1.min.js
 jquery-ui-1.10.2.custom.js
 RDTOM_touch_icon.png
