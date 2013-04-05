@@ -21,4 +21,7 @@
     
     <preference name="permissions" 
         	value="none"/>
+    
+    <preference name="android-installLocation" 
+        	value="auto"/>
 </widget>
