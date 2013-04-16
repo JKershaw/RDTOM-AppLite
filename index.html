@@ -166,6 +166,7 @@ function loadfromlocal()
 	
 	$("#initiatingtext").append("Questions loaded: " + data_questions.resource.questions.question.length + "<br />");
 	
+	console.debug($("#initiatingtext").html());
 	$("#page_start").fadeOut('fast', function() {
 		$("#page_question").fadeIn();
 	});
@@ -179,14 +180,44 @@ function loadquestion()
 	// get rid of the old answers
 	$("#answers").html("");
 
-	question_data = data_questions.resource.questions.question[Math.floor(Math.random() *  data_questions.resource.questions.question.length)];
-	
 	$("#question").html("Loading ... ");
 	
-	// get the new question
-	showquestion(question_data)
-
+	var is_valid = true;
+	var correct_answer = 0;
 	
+	question_data = data_questions.resource.questions.question[Math.floor(Math.random() *  data_questions.resource.questions.question.length)];
+	
+	// check for any "null" values caused by bad data
+	$.each(question_data.answers.answer, function(key, answer) 
+	{
+		if (answer.text == null)
+		{
+			console.debug("Null value detected: Question " + question_data.id + ", Answer " + answer.id);
+			is_valid = false;
+		}
+		if (answer.correct == "true")
+		{
+			correct_answer = answer.id;
+		}
+	});
+	
+	// Basic validation to weed out bad data
+	
+	// If there's no correct answer, this is an invalid question
+	if (correct_answer == 0)
+	{
+		is_valid = false;
+	}
+	
+	// if it's not valid, try again. Chances of it being not valid twice are tiny. Should fix this
+	if (!is_valid)
+	{
+		question_data = data_questions.resource.questions.question[Math.floor(Math.random() *  data_questions.resource.questions.question.length)];
+	}
+	
+	// show the new question
+	showquestion(question_data);
+
 }
 
 
@@ -198,6 +229,7 @@ function showquestion(data)
 	answered = false;
 	// show the new question text
 	
+	
 	$("#question").html(unescape((data.text).replace(/\\(.)/mg, "$1")));
 
 	$("#answers").html();
@@ -208,6 +240,7 @@ function showquestion(data)
 		if (answer.correct == "true")
 		{
 			correct_answer = answer.id;
+			
 			$("#answers").append("<li><a class=\"mobilebutton\" onclick=\"select_answer(" + answer.id + ");\">" + (answer.text).replace(/\\(.)/mg, "$1") + "</a> <span style=\"display:none;\" class=\"correct_answer_win\"><strong>You Win!</strong></span><span style=\"display:none;\" class=\"correct_answer\"><strong> The correct answer.</strong></span></li>");
 		}
 		else
