@@ -111,7 +111,7 @@ p, h3
 
 li
 {
-	margin-bottom: 5px;
+	margin-bottom: 15px;
 }
 
 ol
@@ -151,7 +151,7 @@ ol
 	font-family:arial;
 	font-size:15px;
 	font-weight:bold;
-	padding:6px 24px;
+	padding:14px 24px;
 	text-decoration:none;
 	
 	margin-bottom: 6px;
@@ -249,7 +249,7 @@ ol
 	font-family:arial;
 	font-size:15px;
 
-	padding: 10px 24px;
+	padding: 14px 24px;
 	text-decoration:none;
 	
 	margin-bottom: 6px;

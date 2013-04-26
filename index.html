@@ -55,6 +55,11 @@
 
 <script type="text/javascript">
 
+document.addEventListener("deviceready", function(){
+	// hide the splash screen asap
+	navigator.splashscreen.hide();
+});
+
 var data_questions;
 
 var have_answered = false;
@@ -75,35 +80,52 @@ function initiatequestions()
 	if (checkNetworkStatus()) 
 	{
 		$("#initiatingtext").append("Connected!<br />");
-		$("#initiatingtext").append("Checking for updates<br />");
+		$("#initiatingtext").append("Looking for the server<br />");
 		
 		$("#loadingtext").fadeIn();
 		loadingAnimationVar = setInterval(function(){loadingAnimation(true)},500);
 		
 		// load questions
-		// TODO Callback in ajax call
+		
+		// first see if the server is there and if it's worth continuing. This JS file is not valid, so will generate a parser error if loaded
 		$.ajax({  
-		    url: "http://rollerderbytestomatic.com/api/0.1/jsonp/questions/?callback=callback&developer=rdtom&application=rdtomlite0_1",  
+		    url: "http://rollerderbytestomatic.com/ping.js",  
 		    dataType: "jsonp", 
-		    timeout: 5000,
-		    success: function(data) { 
-		    	$("#initiatingtext").append("Updates Loaded<br />");
-		    	localStorage.setItem('data_questions',JSON.stringify(data));
-		    	$("#initiatingtext").append("Local cache updated<br />");
-		    	$("#initiatingtext").append("Reticulating Splines<br />");
-
-				loadingAnimation(false);
-				loadfromlocal();
-		    } ,
+		    timeout: 2000,
 		    error: function(xhr, textStatus, errorThrown){
-		    	$("#initiatingtext").append("No updates available<br />");
-				loadingAnimation(false);
-				loadfromlocal();
+		    	if (textStatus == "parsererror")
+		    	{
+		    		$("#initiatingtext").append("Found the server, downloading questions<br />");
+					$.ajax({  
+					    url: "http://rollerderbytestomatic.com/api/0.1/jsonp/questions/?callback=callback&developer=rdtom&application=rdtomlite0_1",  
+					    dataType: "jsonp", 
+					    timeout: 10000,
+					    success: function(data) { 
+					    	$("#initiatingtext").append("Questions Loaded<br />");
+					    	save_data_question(data);
+					    	$("#initiatingtext").append("Local cache updated<br />");
+					    	$("#initiatingtext").append("Reticulating Splines<br />");
+
+							loadingAnimation(false);
+							loadfromlocal();
+					    } ,
+					    error: function(xhr, textStatus, errorThrown){
+					    	$("#initiatingtext").append("No questions available, that's ok<br />");
+					    	console.debug(textStatus);
+							loadingAnimation(false);
+							loadfromlocal();
+					    }
+					}); 
+		    	}
+		    	else
+		    	{
+			    	$("#initiatingtext").append("Lost interest<br />");
+			    	console.debug(textStatus);
+					loadingAnimation(false);
+					loadfromlocal();
+			    }
 		    }
-		});  
-		// save to cache
-		
-		
+		}); 
 	}
 	else
 	{
@@ -124,52 +146,6 @@ function loadingAnimation(start)
 		clearInterval(loadingAnimationVar);
 		$("#loadingtext").hide();
 	}
-}
-
-function loadfromlocal()
-{
-	
-	// can we use localstorage?
-	$("#initiatingtext").append("Local storage: ");
-	
-	try
-	{
-		if (localStorage.getItem('data_questions'))
-		{
-			data_questions = JSON.parse(localStorage.getItem('data_questions'));
-		}
-	}
-	catch(err)
-	{
-		$("#initiatingtext").append("(Nope) ");
-	}
-	
-	
-	
-	if (data_questions)
-	{
-		$("#initiatingtext").append("Loaded<br />");
-	}
-	else
-	{
-		// if none of the above, load the default data
-		$("#initiatingtext").append("Missing<br />");
-		$("#initiatingtext").append("Using the default file<br />");
-    	localStorage.setItem('data_questions',JSON.stringify(default_questions));
-    	$("#initiatingtext").append("Local cache has been updated<br />");
-    	data_questions = default_questions;
-    	
-		
-	}
-	
-	// questions is now an array of JS objects representing questions
-	
-	$("#initiatingtext").append("Questions loaded: " + data_questions.resource.questions.question.length + "<br />");
-	
-	console.debug($("#initiatingtext").html());
-	$("#page_start").fadeOut('fast', function() {
-		$("#page_question").fadeIn();
-	});
 }
 
 // load a new question
@@ -220,9 +196,10 @@ function loadquestion()
 
 }
 
-
+// show a question
 var answered = false;
 var correct_answer = 0;
+var section_string;
 
 function showquestion(data)
 {
@@ -234,6 +211,13 @@ function showquestion(data)
 
 	$("#answers").html();
 	
+	
+	// get the section string
+	$(data.sections).each(function( index, section ) {
+		section_string = section.section;	
+		return false;
+	});
+	
 	// load each new answer
 	$.each(data.answers.answer, function(key, answer) 
 	{
@@ -241,7 +225,7 @@ function showquestion(data)
 		{
 			correct_answer = answer.id;
 			
-			$("#answers").append("<li><a class=\"mobilebutton\" onclick=\"select_answer(" + answer.id + ");\">" + (answer.text).replace(/\\(.)/mg, "$1") + "</a> <span style=\"display:none;\" class=\"correct_answer_win\"><strong>You Win!</strong></span><span style=\"display:none;\" class=\"correct_answer\"><strong> The correct answer.</strong></span></li>");
+			$("#answers").append("<li><a class=\"mobilebutton\" onclick=\"select_answer(" + answer.id + ");\">" + (answer.text).replace(/\\(.)/mg, "$1") + "</a> <span style=\"display:none;\" class=\"correct_answer_win\"><strong>You Win!</strong> (See rule " + section_string + ")</span><span style=\"display:none;\" class=\"correct_answer\"><strong> The correct answer.</strong>  (See rule " + section_string + ")</span></li>");
 		}
 		else
 		{
@@ -251,7 +235,7 @@ function showquestion(data)
 	 });
 }
 
-
+// select an answer
 function select_answer(selected)
 {
 	if (!answered)
@@ -272,14 +256,67 @@ function select_answer(selected)
 			$(".correct_answer").show();
 			$("#wrong_answer" + selected).show();
 			$('body').effect("highlight", {color:"#FF0000"}, 1000);
-		}
-
-		//<?php if ($question->get_Notes()) {?>
-		// show the notes
-		//$(".question_notes").show();
-		//<?php } ?>
-		
+		}		
 	}
+}
+
+
+function save_data_question(data)
+{
+	localStorage.setItem('data_questions',JSON.stringify(data));
+}
+
+
+// load the questions from local, return false on failure
+function load_data_question()
+{
+	try
+	{
+		if (localStorage.getItem('data_questions'))
+		{
+			return JSON.parse(localStorage.getItem('data_questions'));
+		}
+	}
+	catch(err)
+	{
+		return false
+	}
+}
+
+function loadfromlocal()
+{
+	// can we use localstorage?
+	$("#initiatingtext").append("Local storage: ");
+	
+	data_questions = load_data_question();
+
+	if (data_questions)
+	{
+		// the data has been loaded
+		$("#initiatingtext").append("Loaded<br />");
+	}
+	else
+	{
+		// couldn't find the data
+		$("#initiatingtext").append("Missing<br />");
+		
+		// so use the default file
+		$("#initiatingtext").append("Using the default file<br />");
+    	data_questions = default_questions;
+	}
+	
+	// questions is now an array of JS objects representing questions
+	$("#initiatingtext").append("Questions loaded: " + data_questions.resource.questions.question.length + "<br />");
+	
+	// save the initiating text to the console
+	console.debug($("#initiatingtext").html());
+	
+	// once all loaded
+	
+	// all loaded, so move on
+	$("#page_start").fadeOut('fast', function() {
+		$("#page_question").fadeIn();
+	});
 }
 
 function checkNetworkStatus() 
