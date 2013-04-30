@@ -40,8 +40,11 @@
 	<icon src="RDTOM_touch_icon.png" gap:platform="android" gap:density="hdpi" />
 	<icon src="RDTOM_touch_icon.png" gap:platform="android" gap:density="xhdpi" />
     
-	<!-- <gap:splash src="splash.png" width="720" height="1280" /> -->
-	
+	<gap:splash src="splash.png"/>
+	<gap:splash src="splash_320_480.png" width="320" height="480" />
+	<gap:splash src="splash_1024_768.png" width="1024" height="768" />
+	<gap:splash src="splash_768_1024.png" width="768" height="1024" />
+
     <preference name="permissions" 
         	value="none"/>
     
