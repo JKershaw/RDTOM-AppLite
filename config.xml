@@ -10,7 +10,7 @@
 	<preference name="android-minSdkVersion" value="7" />
 	<preference name="android-targetSdkVersion" value="10" />
 	
-	<preference name="phonegap-version" value="2.0.0" />
+	<preference name="phonegap-version" value="2.1.0" />
 	
 	<preference name="orientation" value="default" />
 	
@@ -40,7 +40,7 @@
 	<icon src="RDTOM_touch_icon.png" gap:platform="android" gap:density="hdpi" />
 	<icon src="RDTOM_touch_icon.png" gap:platform="android" gap:density="xhdpi" />
     
-	<gap:splash src="splash.png" width="720" height="1280" />
+	<!-- <gap:splash src="splash.png" width="720" height="1280" /> -->
 	
     <preference name="permissions" 
         	value="none"/>
