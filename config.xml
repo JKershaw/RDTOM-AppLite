@@ -10,7 +10,10 @@
 	<preference name="android-minSdkVersion" value="7" />
 	<preference name="android-targetSdkVersion" value="10" />
 	
-	<preference name="phonegap-version" value="1.9.0" />
+	<preference name="phonegap-version" value="2.0.0" />
+	
+	<preference name="orientation" value="default" />
+	
 	<!--  To allow older iOS device support, we don't use the latest PhoneGap version. 1.9.0 should do 3.X devices -->
 	
 	<preference name="show-splash-screen-spinner" value="true" />
@@ -37,7 +40,7 @@
 	<icon src="RDTOM_touch_icon.png" gap:platform="android" gap:density="hdpi" />
 	<icon src="RDTOM_touch_icon.png" gap:platform="android" gap:density="xhdpi" />
     
-	<gap:splash src="splash.png" />
+	<gap:splash src="splash.png" width="720" height="1280" />
 	
     <preference name="permissions" 
         	value="none"/>
