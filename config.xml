@@ -37,6 +37,8 @@
 	<icon src="RDTOM_touch_icon.png" gap:platform="android" gap:density="hdpi" />
 	<icon src="RDTOM_touch_icon.png" gap:platform="android" gap:density="xhdpi" />
     
+	<gap:splash src="splash.png" />
+	
     <preference name="permissions" 
         	value="none"/>
     
