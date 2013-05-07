@@ -10,7 +10,7 @@
 	<preference name="android-minSdkVersion" value="7" />
 	<preference name="android-targetSdkVersion" value="10" />
 	
-	<preference name="phonegap-version" value="2.1.0" />
+	<preference name="phonegap-version" value="2.5.0" />
 	
 	<preference name="orientation" value="default" />
 	
