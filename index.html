@@ -1,11 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html manifest="cache.manifest">
+<!DOCTYPE html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>RDTOM App Lite</title>
 <link rel="stylesheet" href="style.css" type="text/css" >
 
-<meta name="viewport" content="width=device-width" >	
+<meta name="viewport" content="width=device-width, user-scalable=no" >	
 
 <script src="jquery-1.9.1.min.js" type="text/javascript"></script>
 <script src="jquery-ui-1.10.2.custom.js" type="text/javascript"></script>
@@ -15,22 +15,21 @@
 </head>
 <body>
 
-<h1>Roller Derby Test O'Matic (Lite)</h1>
-<h2>Turn left and learn the rules.</h2>
+<h1 id="main_title">Roller Derby Test O'Matic (Lite)</h1>
+<h2 id="main_subtitle">Turn left and learn the rules.</h2>
 	
 <div id="page_start">
 
-	<p style="text-align:center"><a id="startbutton" class="button mobilebutton" onclick="initiatequestions()">Click to start</a></p>
+	<p style="text-align:center"><a id="startbutton" class="button mobilebutton" onclick="initiatequestions()">Answer Questions</a></p>
+	<p style="text-align:center"><a id="unicornbutton" class="button mobilebutton" onclick="initiateunicorn()">60s Time Attack!</a></p>
 	<p style="text-align:center"><a id="aboutbutton" class="button mobilebutton" onclick="$('#div_about').slideToggle();$('#starticon').fadeToggle();">About</a></p>
 	
 	<div style="display:none;" id="div_about">
 		<p>Roller Derby is a fast-paced full contact sport played on roller skates. To help players learn the rules of the sport, this app will provide hundreds of multiple-choice questions.</p>
 		
-		<p>This app is a based on the Roller Derby Test O'Matic website (available at <a href="http://rollerderbytestomatic.com">rollerderbytestomatic.com</a>), used by thousands of skaters and officials worldwide to help learn the WFTDA rules of flat track derby. The website has a lot more to offer, including user accounts, statistics tracking and a mock-test generator; This app is simply a <i>lite</i> version.</p>
+		<p>This app is a based on the Roller Derby Test O'Matic website, used by thousands of skaters and officials worldwide to help learn the WFTDA rules of flat track derby. The website has a lot more to offer, including user accounts, statistics tracking and a mock-test generator; This app is simply a <i>lite</i> version.</p>
 		
-		<p>There a full set of questions already in this app ready to be use. If you have an internet connection the app will attempt to download any updates or new questions whenever the app is loaded.</p>
-
-		<p>If you have any bug reports, feedback, questions or feature requests, please head over to the RDTOM forum (<a href="http://rollerderbytestomatic.com/forum">rollerderbytestomatic.com/forum</a>) or send an email to contact@rollerderbytestomatic.com.</p>
+		<p>If you have any bug reports, feedback, questions or feature requests, please send an email to contact@rollerderbytestomatic.com.</p>
 
 		<p>This App and the RDTOM website are both made by Sausage Roller (aka John Kershaw) who skates with Manchester Roller Derby in the UK and is a full-time freelance developer. He likes coffee.</p>
 	</div>
@@ -51,11 +50,161 @@
 	<p>
 		<a class="button mobilebutton" onclick="loadquestion()">New question</a>
 	</p>
+	
+	
+	<p><a class="button mobilebutton" onclick="gotostart()">Menu</a></p>
 
 </div>
 
+<div id="page_unicorn" style="display:none;">
 
+	<!-- <audio id="unicorn_music" src="music.ogg"></audio> -->
+
+	<p id="unicorn_counter" style="font-size:30px"></p>
+
+	<p id="unicorn_question">Answer as many questions as you can in 60 seconds</p>
+	
+	<ol type="A" id="unicorn_answers">
+	</ol>
+
+	<p id="unicorn_button" style="display:none;">
+		<a class="button mobilebutton" onclick="loadquestion('unicorn_')">New question</a>
+	</p>
+	
+	<p style="text-align:right"><a onclick="unicorn_end(); gotostart(); ">Cancel</a></p>
+	
+</div>
+
+<div id="page_unicorn_results" style="display:none;">
+	<p id="unicorn_score" style="font-size: 60px; font-weight: bold; text-align: center; margin:20px;"></p>
+	<p id="unicorn_breakdown" style="font-size:20px; text-align: center;"></p>
+	
+	<p style="text-align:center"><a class="button mobilebutton" onclick="gotostart()">Menu</a></p>
+
+</div>
 <script type="text/javascript">
+
+function gotostart()
+{
+
+	$("#initiatingtext").html("");
+	$("#loadingtext").html("");
+	$("#loadingtext").hide("");
+	
+	$("#startbutton").show();
+	$("#aboutbutton").show();
+	$("#unicornbutton").show();
+	$("#starticon").show();
+	$('#div_about').hide();
+	$("#initiatingtext").hide();
+	
+	$("#page_unicorn_results").hide();
+	$("#page_unicorn").hide();
+	$("#page_question").hide();
+	$("#page_start").show();
+}
+
+//var a = document.getElementById("unicorn_music");
+var count=6;
+var counter; //1000 will run it every 1 second
+var unicorn_correct = 0;
+var unicorn_wrong = 0;
+
+function initiateunicorn()
+{
+	
+	data_questions = default_questions;
+	
+	$("#main_title").hide(0);
+	$("#main_subtitle").hide(0);
+	$("#unicorn_question").html("");
+	$("#unicorn_answers").html("");
+	$("#unicorn_button").hide();
+	
+	$("#page_start").hide(0, function(){
+		$("#page_unicorn").show(0, function(){
+			count = 6;
+			counter=setInterval(unicorn_countdown_timer, 1000);
+			unicorn_correct = 0;
+			unicorn_wrong = 0;
+			unicorn_countdown_timer();
+		});
+	});
+}
+
+function unicorn_countdown_timer()
+{
+  count=count-1;
+  
+  $("#unicorn_question").html("<h1>Answer as many questions as you can in 60 seconds</h1>");
+  $("#unicorn_counter").html("<h1>" + count + "</h1>");
+  
+  
+  if (count <= 0)
+  {
+     clearInterval(counter);
+		// start music
+		//a.play();
+		count = 60;
+		counter = setInterval(real_unicorn_countdown_timer, 1000);
+		real_unicorn_countdown_timer();
+		$("#unicorn_button").show();
+		loadquestion("unicorn_");
+     return;
+  }
+  
+}
+
+function real_unicorn_countdown_timer()
+{
+  count=count-1;
+  if (count <= 0)
+  {
+     
+     unicorn_end();
+     return;
+  }
+
+	 //Do code for showing the number of seconds here
+	if (count < 10)
+	{
+		  $("#unicorn_counter").html("<h1 style='color: red;'>" + count + "</h1>");
+	}
+	else
+	{
+		  $("#unicorn_counter").html("<h1>" + count + "</h1>");
+	}
+}
+
+function unicorn_end()
+{
+	//a.pause();
+	clearInterval(counter);
+	$('body').stop(true, true);
+	
+	$("body").css("background-color", "white");
+	$("#main_title").show(0);
+	$("#main_subtitle").show(0);
+	$('#page_unicorn').hide();
+	
+	$('#unicorn_score').html("You scored " + ((unicorn_correct * 100) - (unicorn_wrong * 50)) + " points!");
+	
+	var unicorn_correct_s = "";
+	var unicorn_wrong_s = "";
+	if (unicorn_correct != 1)
+	{
+		var unicorn_correct_s = "s";
+	}
+	if (unicorn_wrong != 1)
+	{
+		var unicorn_wrong_s = "s";
+	}
+	$('#unicorn_breakdown').html("You got <strong>" + unicorn_correct + "</strong> question" + unicorn_correct_s + " correct and <strong>" + unicorn_wrong + "</strong> question" + unicorn_wrong_s + " wrong.");
+	
+	$('#page_unicorn_results').fadeIn("slow");
+	
+}
+
 
 document.addEventListener("deviceready", function(){
 	// hide the splash screen asap
@@ -72,6 +221,7 @@ function initiatequestions()
 {
 	$("#startbutton").hide();
 	$("#aboutbutton").hide();
+	$("#unicornbutton").hide();
 	$("#starticon").hide();
 	$('#div_about').hide();
 	$("#initiatingtext").show();
@@ -151,14 +301,19 @@ function loadingAnimation(start)
 }
 
 // load a new question
-function loadquestion()
+function loadquestion(unicorn)
 {
+	if (typeof(unicorn) == "undefined")
+	{
+		unicorn = "";
+	}
+	
 	have_answered = false;
 	
 	// get rid of the old answers
-	$("#answers").html("");
+	$("#" + unicorn + "answers").html("");
 
-	$("#question").html("Loading ... ");
+	$("#" + unicorn + "question").html("Loading ... ");
 	
 	var is_valid = true;
 	var correct_answer = 0;
@@ -194,7 +349,7 @@ function loadquestion()
 	}
 	
 	// show the new question
-	showquestion(question_data);
+	showquestion(question_data, unicorn);
 
 }
 
@@ -203,15 +358,20 @@ var answered = false;
 var correct_answer = 0;
 var section_string;
 
-function showquestion(data)
+function showquestion(data, unicorn)
 {
+	if (typeof(unicorn) == "undefined")
+	{
+		unicorn = "";
+	}
+	
 	answered = false;
 	// show the new question text
 	
 	
-	$("#question").html(unescape((data.text).replace(/\\(.)/mg, "$1")));
+	$("#" + unicorn + "question").html(unescape((data.text).replace(/\\(.)/mg, "$1")));
 
-	$("#answers").html();
+	$("#" + unicorn + "answers").html();
 	
 	
 	// get the section string
@@ -226,20 +386,24 @@ function showquestion(data)
 		if (answer.correct == "true")
 		{
 			correct_answer = answer.id;
-			
-			$("#answers").append("<li><a class=\"mobilebutton\" onclick=\"select_answer(" + answer.id + ");\">" + (answer.text).replace(/\\(.)/mg, "$1") + "</a> <span style=\"display:none;\" class=\"correct_answer_win\"><strong>You Win!</strong> (See rule " + section_string + ")</span><span style=\"display:none;\" class=\"correct_answer\"><strong> The correct answer.</strong>  (See rule " + section_string + ")</span></li>");
+			$("#" + unicorn + "answers").append("<li><a class=\"mobilebutton\" onclick=\"select_answer(" + answer.id + ", '" + unicorn + "');\">" + (answer.text).replace(/\\(.)/mg, "$1") + "</a> <span style=\"display:none;\" class=\"correct_answer_win\"><strong>You Win!</strong> (See rule " + section_string + ")</span><span style=\"display:none;\" class=\"correct_answer\"><strong> The correct answer.</strong>  (See rule " + section_string + ")</span></li>");
 		}
 		else
 		{
-			$("#answers").append("<li><a class=\"mobilebutton\" onclick=\"select_answer(" + answer.id + ");\">" + (answer.text).replace(/\\(.)/mg, "$1") + "</a> <span style=\"display:none;\" class=\"wrong_answer\" id=\"wrong_answer" + answer.id + "\"><strong>Wrong!</strong></span></li>");
+			$("#" + unicorn + "answers").append("<li><a class=\"mobilebutton\" onclick=\"select_answer(" + answer.id + ", '" + unicorn + "');\">" + (answer.text).replace(/\\(.)/mg, "$1") + "</a> <span style=\"display:none;\" class=\"wrong_answer\" id=\"" + unicorn + "wrong_answer" + answer.id + "\"><strong>Wrong!</strong></span></li>");
 		}
 			
 	 });
 }
 
 // select an answer
-function select_answer(selected)
+function select_answer(selected, unicorn)
 {
+	if (typeof(unicorn) == "undefined")
+	{
+		unicorn = "";
+	}
+	
 	if (!answered)
 	{
 		// make sure we only answer once
@@ -249,14 +413,16 @@ function select_answer(selected)
 		if (selected == correct_answer)
 		{
 			// correct!
+			unicorn_correct = unicorn_correct + 1;
 			$(".correct_answer_win").show();
 			$('body').effect("highlight", {color:"#00FF00"}, 1000);
 		}
 		else
 		{
 			// wrong!
+			unicorn_wrong = unicorn_wrong + 1;
 			$(".correct_answer").show();
-			$("#wrong_answer" + selected).show();
+			$("#" + unicorn + "wrong_answer" + selected).show();
 			$('body').effect("highlight", {color:"#FF0000"}, 1000);
 		}		
 	}
@@ -316,13 +482,16 @@ function loadfromlocal()
 	// once all loaded
 	
 	// all loaded, so move on
-	$("#page_start").fadeOut('fast', function() {
+	$("#page_start").fadeOut(0, function() {
 		$("#page_question").fadeIn();
 	});
 }
 
 function checkNetworkStatus() 
 {
+	// in version 1.0.0 this will be changed
+	return false;
+	
     if (navigator.onLine) 
     {
     	return true;
