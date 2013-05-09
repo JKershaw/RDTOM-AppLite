@@ -76,7 +76,7 @@
 </div>
 
 <div id="page_unicorn_results" style="display:none;">
-	<p id="unicorn_score" style="font-size: 60px; font-weight: bold; text-align: center; margin:20px;"></p>
+	<p id="unicorn_score" style="font-size: 50px; font-weight: bold; text-align: center; margin:20px;"></p>
 	<p id="unicorn_breakdown" style="font-size:20px; text-align: center;"></p>
 	
 	<p style="text-align:center"><a class="button mobilebutton" onclick="gotostart()">Menu</a></p>
@@ -187,7 +187,7 @@ function unicorn_end()
 	$("#main_subtitle").show(0);
 	$('#page_unicorn').hide();
 	
-	$('#unicorn_score').html("You scored <br />" + ((unicorn_correct * 100) - (unicorn_wrong * 50)) + " points!");
+	$('#unicorn_score').html("You scored<br />" + ((unicorn_correct * 100) - (unicorn_wrong * 50)) + " points!");
 	
 	var unicorn_correct_s = "";
 	var unicorn_wrong_s = "";
