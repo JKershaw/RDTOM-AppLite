@@ -26,8 +26,6 @@
         John Kershaw
     </author>
     
-    <access origin="*" browserOnly="true" />
-    
     <preference name="permissions" 
         	value="none"/>
     
