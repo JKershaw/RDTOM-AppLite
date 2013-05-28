@@ -2,19 +2,17 @@
     <widget xmlns = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.rollerderbytestomatic.lite"
-        versionCode="17" 
-        version   = "0.4.1">
+        versionCode="18" 
+        version   = "0.4.2">
 
     <!-- versionCode is optional and Android only -->
     
 	<preference name="android-minSdkVersion" value="7" />
-	<preference name="android-targetSdkVersion" value="10" />
+	<preference name="android-targetSdkVersion" value="17" />
 	
-	<preference name="phonegap-version" value="2.5.0" />
+	<preference name="phonegap-version" value="2.7.0" />
 	
 	<preference name="orientation" value="default" />
-	
-	<!--  To allow older iOS device support, we don't use the latest PhoneGap version. 1.9.0 should do 3.X devices -->
 	
 	<preference name="show-splash-screen-spinner" value="true" />
 	

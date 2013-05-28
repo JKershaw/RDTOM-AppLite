@@ -20,9 +20,12 @@
 	
 <div id="page_start">
 
+	<p style="text-align:center"><img id="starticon" style="cursor:pointer; max-width:40%;" onclick="initiatequestions()" src="RDTOM_touch_icon.png"/></p>
+	
 	<p style="text-align:center"><a id="startbutton" class="button mobilebutton" onclick="initiatequestions()">Answer Questions</a></p>
 	<p style="text-align:center"><a id="unicornbutton" class="button mobilebutton" onclick="initiateunicorn()">60s Time Attack!</a></p>
 	<p style="text-align:center"><a id="aboutbutton" class="button mobilebutton" onclick="$('#div_about').slideToggle();$('#starticon').fadeToggle();">About</a></p>
+	<p style="text-align:center"><a id="minskillsbutton" class="adbutton button mobilebutton mobileadbutton" href="http://play.google.com/store/apps/details?id=com.rollerderbytestomatic.ms">Minimum Skills App</a></p>
 	
 	<div style="display:none;" id="div_about">
 		<p>Roller Derby is a fast-paced full contact sport played on roller skates. To help players learn the rules of the sport, this app will provide hundreds of multiple-choice questions.</p>
@@ -33,8 +36,7 @@
 
 		<p>This App and the RDTOM website are both made by Sausage Roller (aka John Kershaw) who skates with Manchester Roller Derby in the UK and is a full-time freelance developer. He likes coffee.</p>
 	</div>
-	
-	<p style="text-align:center"><img id="starticon" style="cursor:pointer; max-width:60%;" onclick="initiatequestions()" src="RDTOM_touch_icon.png"/></p>
+
 	
 	<p style="text-align:center" id="initiatingtext"></p>
 	<p style="text-align:center; display:none;" id="loadingtext"></p>
