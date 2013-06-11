@@ -27,7 +27,7 @@
     </author>
     
     <access origin="https://play.google.com" browserOnly="true" />
-    <access origin="http://itunes.com" browserOnly="true" />
+    <access origin="itunes.apple.com" browserOnly="true" />
     
     <preference name="permissions" 
         	value="none"/>
