@@ -2,8 +2,8 @@
     <widget xmlns = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.rollerderbytestomatic.lite"
-        versionCode="17" 
-        version   = "0.4.1">
+        versionCode="18" 
+        version   = "0.4.2">
 
     <!-- versionCode is optional and Android only -->
     
@@ -27,12 +27,16 @@
     </author>
     
     <access origin="https://play.google.com" browserOnly="true" />
+    <access origin="http://itunes.com" browserOnly="true" />
     
     <preference name="permissions" 
         	value="none"/>
     
     <preference name="android-installLocation" 
         	value="auto"/>
+    
+    <!-- plugins -->
+    <plugin name="Device" value="org.apache.cordova.Device" />
     
 
     <!-- Icon information -->
