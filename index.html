@@ -1,229 +1,222 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>RDTOM App Lite</title>
-<link rel="stylesheet" href="style.css" type="text/css" >
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>RDTOM App Lite</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
 
-<meta name="viewport" content="width=device-width, user-scalable=no" >	
+    <meta name="viewport" content="width=device-width, user-scalable=no">
 
-<script src="jquery-1.9.1.min.js" type="text/javascript"></script>
-<script src="jquery-ui-1.10.2.custom.js" type="text/javascript"></script>
-<script src="defaultquestions.js" type="text/javascript"></script>
+    <script src="jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="jquery-ui-1.10.2.custom.js" type="text/javascript"></script>
+    <script src="defaultquestions.js" type="text/javascript"></script>
 
 
 </head>
 <body>
 
 <h1 id="main_title">Roller Derby Test O'Matic (Lite)</h1>
+
 <h2 id="main_subtitle">Turn left and learn the rules.</h2>
-	
+
 <div id="page_start">
 
-	<p style="text-align:center"><img id="starticon" style="cursor:pointer; max-width:40%;" onclick="initiatequestions()" src="RDTOM_touch_icon.png"/></p>
-	
-	<p style="text-align:center"><a id="startbutton" class="button mobilebutton" onclick="initiatequestions()">Answer Questions</a></p>
-	<p style="text-align:center"><a id="unicornbutton" class="button mobilebutton" onclick="initiateunicorn()">60s Time Attack!</a></p>
-	<p style="text-align:center"><a id="aboutbutton" class="button mobilebutton" onclick="$('#div_about').slideToggle();$('#starticon').fadeToggle();">About</a></p>
-	<p style="text-align:center"><a id="minskillsbutton" class="adbutton button mobilebutton mobileadbutton" onclick="goto_minskills_app();">Minimum Skills App</a></p>
-	
-	<div style="display:none;" id="div_about">
-		<p>Roller Derby is a fast-paced full contact sport played on roller skates. To help players learn the rules of the sport, this app will provide hundreds of multiple-choice questions.</p>
-		
-		<p>This app is a based on the Roller Derby Test O'Matic website, used by thousands of skaters and officials worldwide to help learn the WFTDA rules of flat track derby. The website has a lot more to offer, including user accounts, statistics tracking and a mock-test generator; This app is simply a <i>lite</i> version.</p>
-		
-		<p>If you have any bug reports, feedback, questions or feature requests, please send an email to contact@rollerderbytestomatic.com.</p>
+    <p style="text-align:center"><img id="starticon" style="cursor:pointer; max-width:40%;"
+                                      onclick="initiatequestions()" src="RDTOM_touch_icon.png"/></p>
 
-		<p>This App and the RDTOM website are both made by Sausage Roller (aka John Kershaw) who skates with Manchester Roller Derby in the UK and is a full-time freelance developer. He likes coffee.</p>
-	</div>
+    <p style="text-align:center"><a id="startbutton" class="button mobilebutton" onclick="initiatequestions()">Answer
+        Questions</a></p>
 
-	
-	<p style="text-align:center" id="initiatingtext"></p>
-	<p style="text-align:center; display:none;" id="loadingtext"></p>
+    <p style="text-align:center"><a id="unicornbutton" class="button mobilebutton" onclick="initiateunicorn()">60s Time
+        Attack!</a></p>
+
+    <p style="text-align:center"><a id="aboutbutton" class="button mobilebutton"
+                                    onclick="$('#div_about').slideToggle();$('#starticon').fadeToggle();">About</a></p>
+
+    <p style="text-align:center"><a id="minskillsbutton" class="adbutton button mobilebutton mobileadbutton"
+                                    onclick="goto_minskills_app();">Minimum Skills App</a></p>
+
+    <div style="display:none;" id="div_about">
+        <p>Roller Derby is a fast-paced full contact sport played on roller skates. To help players learn the rules of
+            the sport, this app will provide hundreds of multiple-choice questions.</p>
+
+        <p>This app is a based on the Roller Derby Test O'Matic website, used by thousands of skaters and officials
+            worldwide to help learn the WFTDA rules of flat track derby. The website has a lot more to offer, including
+            user accounts, statistics tracking and a mock-test generator; This app is simply a <i>lite</i> version.</p>
+
+        <p>If you have any bug reports, feedback, questions or feature requests, please send an email to
+            contact@rollerderbytestomatic.com.</p>
+
+        <p>This App and the RDTOM website are both made by Sausage Roller (aka John Kershaw) who skates with Manchester
+            Roller Derby in the UK and is a full-time freelance developer. He likes coffee.</p>
+    </div>
+
+
+    <p style="text-align:center" id="initiatingtext"></p>
+
+    <p style="text-align:center; display:none;" id="loadingtext"></p>
 </div>
 
 <div id="page_question" style="display:none;">
 
-	<p id="question"></p>
-	
-	<ol type="A" id="answers">
-	</ol>
+    <p id="question"></p>
 
-	<p>
-		<a class="button mobilebutton" onclick="loadquestion()">New question</a>
-	</p>
-	
-	
-	<p><a class="button mobilebutton" onclick="gotostart()">Menu</a></p>
+    <ol type="A" id="answers">
+    </ol>
+
+    <p>
+        <a class="button mobilebutton" onclick="loadquestion()">New question</a>
+    </p>
+
+
+    <p><a class="button mobilebutton" onclick="gotostart()">Menu</a></p>
 
 </div>
 
 <div id="page_unicorn" style="display:none;">
 
-	<!-- <audio id="unicorn_music" src="music.ogg"></audio> -->
+    <!-- <audio id="unicorn_music" src="music.ogg"></audio> -->
 
-	<p id="unicorn_counter" style="font-size:30px"></p>
+    <p id="unicorn_counter" style="font-size:30px"></p>
 
-	<p id="unicorn_question">Answer as many questions as you can in 60 seconds</p>
-	
-	<ol type="A" id="unicorn_answers">
-	</ol>
+    <p id="unicorn_question">Answer as many questions as you can in 60 seconds</p>
 
-	<p id="unicorn_button" style="display:none;">
-		<a class="button mobilebutton" onclick="loadquestion('unicorn_')">New question</a>
-	</p>
-	
-	<p style="text-align:right"><a onclick="unicorn_end(); gotostart(); ">Cancel</a></p>
-	
+    <ol type="A" id="unicorn_answers">
+    </ol>
+
+    <p id="unicorn_button" style="display:none;">
+        <a class="button mobilebutton" onclick="loadquestion('unicorn_')">New question</a>
+    </p>
+
+    <p style="text-align:right"><a onclick="unicorn_end(); gotostart(); ">Cancel</a></p>
+
 </div>
 
 <div id="page_unicorn_results" style="display:none;">
-	<p id="unicorn_score" style="font-size: 50px; font-weight: bold; text-align: center; margin:20px;"></p>
-	<p id="unicorn_breakdown" style="font-size:20px; text-align: center;"></p>
-	
-	<p style="text-align:center"><a class="button mobilebutton" onclick="gotostart()">Menu</a></p>
+    <p id="unicorn_score" style="font-size: 50px; font-weight: bold; text-align: center; margin:20px;"></p>
+
+    <p id="unicorn_breakdown" style="font-size:20px; text-align: center;"></p>
+
+    <p style="text-align:center"><a class="button mobilebutton" onclick="gotostart()">Menu</a></p>
 
 </div>
 <script type="text/javascript">
 
-function goto_minskills_app()
-{
-	if (device.platform != "Android")
-	{
-		// goto iOS App Store
-		var ref = window.open('itms-apps://itunes.apple.com/us/app/minimum-skills/id655072717?mt=8');
-	}
-	else
-	{
-		// goto Android app store
-		var ref = window.open('https://play.google.com/store/apps/details?id=com.rollerderbytestomatic.ms', '_blank');
-	}
+function goto_minskills_app() {
+    if (device.platform != "Android") {
+        // goto iOS App Store
+        window.open('itms-apps://itunes.apple.com/us/app/minimum-skills/id655072717?mt=8');
+    }
+    else {
+        // goto Android app store
+        window.open('https://play.google.com/store/apps/details?id=com.rollerderbytestomatic.ms', '_blank');
+    }
 }
-function gotostart()
-{
+function gotostart() {
 
-	$("#initiatingtext").html("");
-	$("#loadingtext").html("");
-	$("#loadingtext").hide("");
-	
-	$("#startbutton").show();
-	$("#aboutbutton").show();
-	$("#unicornbutton").show();
-	$("#starticon").show();
-	$('#div_about').hide();
-	$("#initiatingtext").hide();
-	
-	$("#page_unicorn_results").hide();
-	$("#page_unicorn").hide();
-	$("#page_question").hide();
-	$("#page_start").show();
+    $("#initiatingtext").html("").hide();
+    $("#loadingtext").html("").hide("");
+
+    $("#startbutton").show();
+    $("#aboutbutton").show();
+    $("#unicornbutton").show();
+    $("#starticon").show();
+    $('#div_about').hide();
+
+    $("#page_unicorn_results").hide();
+    $("#page_unicorn").hide();
+    $("#page_question").hide();
+    $("#page_start").show();
 }
 
 //var a = document.getElementById("unicorn_music");
-var count=6;
+var count = 6;
 var counter; //1000 will run it every 1 second
 var unicorn_correct = 0;
 var unicorn_wrong = 0;
 
-function initiateunicorn()
-{
-	
-	data_questions = default_questions;
-	
-	$("#main_title").hide(0);
-	$("#main_subtitle").hide(0);
-	$("#unicorn_question").html("");
-	$("#unicorn_answers").html("");
-	$("#unicorn_button").hide();
-	
-	$("#page_start").hide(0, function(){
-		$("#page_unicorn").show(0, function(){
-			count = 6;
-			counter=setInterval(unicorn_countdown_timer, 1000);
-			unicorn_correct = 0;
-			unicorn_wrong = 0;
-			unicorn_countdown_timer();
-		});
-	});
+function initiateunicorn() {
+
+    data_questions = default_questions;
+
+    $("#main_title").hide(0);
+    $("#main_subtitle").hide(0);
+    $("#unicorn_question").html("");
+    $("#unicorn_answers").html("");
+    $("#unicorn_button").hide();
+
+    $("#page_start").hide(0, function () {
+        $("#page_unicorn").show(0, function () {
+            count = 6;
+            counter = setInterval(unicorn_countdown_timer, 1000);
+            unicorn_correct = 0;
+            unicorn_wrong = 0;
+            unicorn_countdown_timer();
+        });
+    });
 }
 
-function unicorn_countdown_timer()
-{
-  count=count-1;
-  
-  $("#unicorn_question").html("<h1>Answer as many questions as you can in 60 seconds</h1>");
-  $("#unicorn_counter").html("<h1>" + count + "</h1>");
-  
-  
-  if (count <= 0)
-  {
-     clearInterval(counter);
-		// start music
-		//a.play();
-		count = 60;
-		counter = setInterval(real_unicorn_countdown_timer, 1000);
-		real_unicorn_countdown_timer();
-		$("#unicorn_button").show();
-		loadquestion("unicorn_");
-     return;
-  }
-  
+function unicorn_countdown_timer() {
+    count = count - 1;
+
+    $("#unicorn_question").html("<h1>Answer as many questions as you can in 60 seconds</h1>");
+    $("#unicorn_counter").html("<h1>" + count + "</h1>");
+
+    if (count <= 0) {
+        clearInterval(counter);
+        // start music
+        //a.play();
+        count = 60;
+        counter = setInterval(real_unicorn_countdown_timer, 1000);
+        real_unicorn_countdown_timer();
+        $("#unicorn_button").show();
+        loadquestion("unicorn_");
+    }
 }
 
-function real_unicorn_countdown_timer()
-{
-  count=count-1;
-  if (count <= 0)
-  {
-     
-     unicorn_end();
-     return;
-  }
-
-	 //Do code for showing the number of seconds here
-	if (count < 10)
-	{
-		  $("#unicorn_counter").html("<h1 style='color: red;'>" + count + "</h1>");
-	}
-	else
-	{
-		  $("#unicorn_counter").html("<h1>" + count + "</h1>");
-	}
+function real_unicorn_countdown_timer() {
+    count = count - 1;
+    if (count <= 0) {
+        unicorn_end();
+    }
+    else if (count < 10) {
+        $("#unicorn_counter").html("<h1 style='color: red;'>" + count + "</h1>");
+    }
+    else {
+        $("#unicorn_counter").html("<h1>" + count + "</h1>");
+    }
 }
 
-function unicorn_end()
-{
-	//a.pause();
-	clearInterval(counter);
-	$('body').stop(true, true);
-	
-	$("body").css("background-color", "white");
-	$("#main_title").show(0);
-	$("#main_subtitle").show(0);
-	$('#page_unicorn').hide();
-	
-	$('#unicorn_score').html("You scored<br />" + ((unicorn_correct * 100) - (unicorn_wrong * 50)) + " points!");
-	
-	var unicorn_correct_s = "";
-	var unicorn_wrong_s = "";
-	if (unicorn_correct != 1)
-	{
-		var unicorn_correct_s = "s";
-	}
-	if (unicorn_wrong != 1)
-	{
-		var unicorn_wrong_s = "s";
-	}
-	$('#unicorn_breakdown').html("You got <strong>" + unicorn_correct + "</strong> question" + unicorn_correct_s + " correct and <strong>" + unicorn_wrong + "</strong> question" + unicorn_wrong_s + " wrong.");
-	
-	$('#page_unicorn_results').fadeIn("slow");
-	
+function unicorn_end() {
+    //a.pause();
+    clearInterval(counter);
+    $('body').stop(true, true);
+
+    $("body").css("background-color", "white");
+    $("#main_title").show(0);
+    $("#main_subtitle").show(0);
+    $('#page_unicorn').hide();
+
+    $('#unicorn_score').html("You scored<br />" + ((unicorn_correct * 100) - (unicorn_wrong * 50)) + " points!");
+
+    var unicorn_correct_s = "";
+    var unicorn_wrong_s = "";
+    if (unicorn_correct != 1) {
+        unicorn_correct_s = "s";
+    }
+    if (unicorn_wrong != 1) {
+        unicorn_wrong_s = "s";
+    }
+    $('#unicorn_breakdown').html("You got <strong>" + unicorn_correct + "</strong> question" + unicorn_correct_s + " correct and <strong>" + unicorn_wrong + "</strong> question" + unicorn_wrong_s + " wrong.");
+
+    $('#page_unicorn_results').fadeIn("slow");
+
 }
 
 
-document.addEventListener("deviceready", function(){
-	// hide the splash screen asap
-	navigator.splashscreen.hide();
+document.addEventListener("deviceready", function () {
+    // hide the splash screen asap
+    navigator.splashscreen.hide();
 });
 
 var data_questions;
@@ -232,139 +225,123 @@ var have_answered = false;
 
 var loadingAnimationVar;
 
-function initiatequestions()
-{
-	$("#startbutton").hide();
-	$("#aboutbutton").hide();
-	$("#unicornbutton").hide();
-	$("#starticon").hide();
-	$('#div_about').hide();
-	$("#initiatingtext").show();
-	
-	$("#initiatingtext").append("Browser status: ");
-	
-	// can we load from the server?
-	if (checkNetworkStatus()) 
-	{
-		$("#initiatingtext").append("Connected!<br />");
-		$("#initiatingtext").append("Looking for the server<br />");
-		
-		$("#loadingtext").fadeIn();
-		loadingAnimationVar = setInterval(function(){loadingAnimation(true)},500);
-		
-		// load questions
-		
-		// first see if the server is there and if it's worth continuing. This JS file is not valid, so will generate a parser error if loaded
-		$.ajax({  
-		    url: "http://rollerderbytestomatic.com/ping.js",  
-		    dataType: "jsonp", 
-		    timeout: 2000,
-		    error: function(xhr, textStatus, errorThrown){
-		    	if (textStatus == "parsererror")
-		    	{
-		    		$("#initiatingtext").append("Found the server, downloading questions<br />");
-					$.ajax({  
-					    url: "http://rollerderbytestomatic.com/api/0.1/jsonp/questions/?callback=callback&developer=rdtom&application=rdtomlite0_3",  
-					    dataType: "jsonp", 
-					    timeout: 10000,
-					    success: function(data) { 
-					    	$("#initiatingtext").append("Questions Loaded<br />");
-					    	save_data_question(data);
-					    	$("#initiatingtext").append("Local cache updated<br />");
-					    	$("#initiatingtext").append("Reticulating Splines<br />");
+function initiatequestions() {
+    $("#startbutton").hide();
+    $("#aboutbutton").hide();
+    $("#unicornbutton").hide();
+    $("#starticon").hide();
+    $('#div_about').hide();
+    $("#initiatingtext").show().append("Browser status: ");
 
-							loadingAnimation(false);
-							loadfromlocal();
-					    } ,
-					    error: function(xhr, textStatus, errorThrown){
-					    	$("#initiatingtext").append("No questions available, that's ok<br />");
-					    	console.debug(textStatus);
-							loadingAnimation(false);
-							loadfromlocal();
-					    }
-					}); 
-		    	}
-		    	else
-		    	{
-			    	$("#initiatingtext").append("Lost interest<br />");
-			    	console.debug(textStatus);
-					loadingAnimation(false);
-					loadfromlocal();
-			    }
-		    }
-		}); 
-	}
-	else
-	{
-		$("#initiatingtext").append("Offline<br />");
-		loadfromlocal();
-	}
+    // can we load from the server?
+    if (checkNetworkStatus()) {
+        $("#initiatingtext").append("Connected!<br />Looking for the server<br />");
+
+        $("#loadingtext").fadeIn();
+        loadingAnimationVar = setInterval(function () {
+            loadingAnimation(true)
+        }, 500);
+
+        // load questions
+
+        // first see if the server is there and if it's worth continuing. This JS file is not valid, so will generate a parser error if loaded
+        $.ajax({
+            url: "http://rollerderbytestomatic.com/ping.js",
+            dataType: "jsonp",
+            timeout: 2000,
+            error: function (xhr, textStatus, errorThrown) {
+                if (textStatus == "parsererror") {
+                    $("#initiatingtext").append("Found the server, downloading questions<br />");
+                    $.ajax({
+                        url: "http://rollerderbytestomatic.com/api/0.1/jsonp/questions/?callback=callback&developer=rdtom&application=rdtomlite0_3",
+                        dataType: "jsonp",
+                        timeout: 10000,
+                        success: function (data) {
+                            $("#initiatingtext").append("Questions Loaded<br />");
+                            save_data_question(data);
+                            $("#initiatingtext").append("Local cache updated<br />Reticulating Splines<br />");
+
+                            loadingAnimation(false);
+                            loadfromlocal();
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            $("#initiatingtext").append("No questions available, that's ok<br />");
+                            //console.debug(textStatus);
+                            loadingAnimation(false);
+                            loadfromlocal();
+                        }
+                    });
+                }
+                else {
+                    $("#initiatingtext").append("Lost interest<br />");
+                    //console.debug(textStatus);
+                    loadingAnimation(false);
+                    loadfromlocal();
+                }
+            }
+        });
+    }
+    else {
+        $("#initiatingtext").append("Offline<br />");
+        loadfromlocal();
+    }
 }
 
 // the loading animation when downloading updates
-function loadingAnimation(start)
-{
-	if (start)
-	{
-		$("#loadingtext").append(".");
-	}
-	else
-	{
-		clearInterval(loadingAnimationVar);
-		$("#loadingtext").hide();
-	}
+function loadingAnimation(start) {
+    if (start) {
+        $("#loadingtext").append(".");
+    }
+    else {
+        clearInterval(loadingAnimationVar);
+        $("#loadingtext").hide();
+    }
 }
 
 // load a new question
-function loadquestion(unicorn)
-{
-	if (typeof(unicorn) == "undefined")
-	{
-		unicorn = "";
-	}
-	
-	have_answered = false;
-	
-	// get rid of the old answers
-	$("#" + unicorn + "answers").html("");
+function loadquestion(unicorn) {
+    if (typeof(unicorn) == "undefined") {
+        unicorn = "";
+    }
 
-	$("#" + unicorn + "question").html("Loading ... ");
-	
-	var is_valid = true;
-	var correct_answer = 0;
-	
-	question_data = data_questions.resource.questions.question[Math.floor(Math.random() *  data_questions.resource.questions.question.length)];
-	
-	// check for any "null" values caused by bad data
-	$.each(question_data.answers.answer, function(key, answer) 
-	{
-		if (answer.text == null)
-		{
-			console.debug("Null value detected: Question " + question_data.id + ", Answer " + answer.id);
-			is_valid = false;
-		}
-		if (answer.correct == "true")
-		{
-			correct_answer = answer.id;
-		}
-	});
-	
-	// Basic validation to weed out bad data
-	
-	// If there's no correct answer, this is an invalid question
-	if (correct_answer == 0)
-	{
-		is_valid = false;
-	}
-	
-	// if it's not valid, try again. Chances of it being not valid twice are tiny. Should fix this
-	if (!is_valid)
-	{
-		question_data = data_questions.resource.questions.question[Math.floor(Math.random() *  data_questions.resource.questions.question.length)];
-	}
-	
-	// show the new question
-	showquestion(question_data, unicorn);
+    have_answered = false;
+
+    // get rid of the old answers
+    $("#" + unicorn + "answers").html("");
+
+    $("#" + unicorn + "question").html("Loading ... ");
+
+    var is_valid = true;
+    var correct_answer = 0;
+
+    question_data = data_questions.resource.questions.question[Math.floor(Math.random() * data_questions.resource.questions.question.length)];
+
+    // check for any "null" values caused by bad data
+    $.each(question_data.answers.answer, function (key, answer) {
+        if (answer.text == null) {
+            console.debug("Null value detected: Question " + question_data.id + ", Answer " + answer.id);
+            is_valid = false;
+        }
+        if (answer.correct == "true") {
+            correct_answer = answer.id;
+        }
+    });
+
+    // Basic validation to weed out bad data
+
+    // If there's no correct answer, this is an invalid question
+    if (correct_answer == 0) {
+        is_valid = false;
+    }
+
+    // if it's not valid, try again. Chances of it being not valid twice are tiny. Should fix this
+    var question_data;
+    if (!is_valid) {
+        question_data = data_questions.resource.questions.question[Math.floor(Math.random() * data_questions.resource.questions.question.length)];
+    }
+
+    // show the new question
+    showquestion(question_data, unicorn);
 
 }
 
@@ -373,151 +350,129 @@ var answered = false;
 var correct_answer = 0;
 var section_string;
 
-function showquestion(data, unicorn)
-{
-	if (typeof(unicorn) == "undefined")
-	{
-		unicorn = "";
-	}
-	
-	answered = false;
-	// show the new question text
-	
-	
-	$("#" + unicorn + "question").html(unescape((data.text).replace(/\\(.)/mg, "$1")));
+function showquestion(data, unicorn) {
+    if (typeof(unicorn) == "undefined") {
+        unicorn = "";
+    }
 
-	$("#" + unicorn + "answers").html();
-	
-	
-	// get the section string
-	$(data.sections).each(function( index, section ) {
-		section_string = section.section;	
-		return false;
-	});
-	
-	// load each new answer
-	$.each(data.answers.answer, function(key, answer) 
-	{
-		if (answer.correct == "true")
-		{
-			correct_answer = answer.id;
-			$("#" + unicorn + "answers").append("<li><a class=\"mobilebutton\" onclick=\"select_answer(" + answer.id + ", '" + unicorn + "');\">" + (answer.text).replace(/\\(.)/mg, "$1") + "</a> <span style=\"display:none;\" class=\"correct_answer_win\"><strong>You Win!</strong> (See rule " + section_string + ")</span><span style=\"display:none;\" class=\"correct_answer\"><strong> The correct answer.</strong>  (See rule " + section_string + ")</span></li>");
-		}
-		else
-		{
-			$("#" + unicorn + "answers").append("<li><a class=\"mobilebutton\" onclick=\"select_answer(" + answer.id + ", '" + unicorn + "');\">" + (answer.text).replace(/\\(.)/mg, "$1") + "</a> <span style=\"display:none;\" class=\"wrong_answer\" id=\"" + unicorn + "wrong_answer" + answer.id + "\"><strong>Wrong!</strong></span></li>");
-		}
-			
-	 });
+    answered = false;
+    // show the new question text
+
+
+    $("#" + unicorn + "question").html(unescape((data.text).replace(/\\(.)/mg, "$1")));
+
+    $("#" + unicorn + "answers").html();
+
+
+    // get the section string
+    $(data.sections).each(function (index, section) {
+        section_string = section.section;
+        return false;
+    });
+
+    // load each new answer
+    $.each(data.answers.answer, function (key, answer) {
+        if (answer.correct == "true") {
+            correct_answer = answer.id;
+            $("#" + unicorn + "answers").append("<li><a class=\"mobilebutton\" onclick=\"select_answer(" + answer.id + ", '" + unicorn + "');\">" + (answer.text).replace(/\\(.)/mg, "$1") + "</a> <span style=\"display:none;\" class=\"correct_answer_win\"><strong>You Win!</strong> (See rule " + section_string + ")</span><span style=\"display:none;\" class=\"correct_answer\"><strong> The correct answer.</strong>  (See rule " + section_string + ")</span></li>");
+        }
+        else {
+            $("#" + unicorn + "answers").append("<li><a class=\"mobilebutton\" onclick=\"select_answer(" + answer.id + ", '" + unicorn + "');\">" + (answer.text).replace(/\\(.)/mg, "$1") + "</a> <span style=\"display:none;\" class=\"wrong_answer\" id=\"" + unicorn + "wrong_answer" + answer.id + "\"><strong>Wrong!</strong></span></li>");
+        }
+
+    });
 }
 
 // select an answer
-function select_answer(selected, unicorn)
-{
-	if (typeof(unicorn) == "undefined")
-	{
-		unicorn = "";
-	}
-	
-	if (!answered)
-	{
-		// make sure we only answer once
-		answered = true;
+function select_answer(selected, unicorn) {
+    if (typeof(unicorn) == "undefined") {
+        unicorn = "";
+    }
 
-		// show what was right and what was wrong
-		if (selected == correct_answer)
-		{
-			// correct!
-			unicorn_correct = unicorn_correct + 1;
-			$(".correct_answer_win").show();
-			$('body').effect("highlight", {color:"#00FF00"}, 1000);
-		}
-		else
-		{
-			// wrong!
-			unicorn_wrong = unicorn_wrong + 1;
-			$(".correct_answer").show();
-			$("#" + unicorn + "wrong_answer" + selected).show();
-			$('body').effect("highlight", {color:"#FF0000"}, 1000);
-		}		
-	}
+    if (!answered) {
+        // make sure we only answer once
+        answered = true;
+
+        // show what was right and what was wrong
+        if (selected == correct_answer) {
+            // correct!
+            unicorn_correct = unicorn_correct + 1;
+            $(".correct_answer_win").show();
+            $('body').effect("highlight", {color: "#00FF00"}, 1000);
+        }
+        else {
+            // wrong!
+            unicorn_wrong = unicorn_wrong + 1;
+            $(".correct_answer").show();
+            $("#" + unicorn + "wrong_answer" + selected).show();
+            $('body').effect("highlight", {color: "#FF0000"}, 1000);
+        }
+    }
 }
 
 
-function save_data_question(data)
-{
-	localStorage.setItem('data_questions',JSON.stringify(data));
+function save_data_question(data) {
+    localStorage.setItem('data_questions', JSON.stringify(data));
 }
 
 
 // load the questions from local, return false on failure
-function load_data_question()
-{
-	try
-	{
-		if (localStorage.getItem('data_questions'))
-		{
-			return JSON.parse(localStorage.getItem('data_questions'));
-		}
-	}
-	catch(err)
-	{
-		return false
-	}
+function load_data_question() {
+    try {
+        if (localStorage.getItem('data_questions')) {
+            return JSON.parse(localStorage.getItem('data_questions'));
+        }
+    }
+    catch (err) {
+        return false;
+    }
 }
 
-function loadfromlocal()
-{
-	// can we use localstorage?
-	$("#initiatingtext").append("Local storage: ");
-	
-	data_questions = load_data_question();
+function loadfromlocal() {
+    // can we use localstorage?
+    $("#initiatingtext").append("Local storage: ");
 
-	if (data_questions)
-	{
-		// the data has been loaded
-		$("#initiatingtext").append("Loaded<br />");
-	}
-	else
-	{
-		// couldn't find the data
-		$("#initiatingtext").append("Missing<br />");
-		
-		// so use the default file
-		$("#initiatingtext").append("Using the default file<br />");
-    	data_questions = default_questions;
-	}
-	
-	// questions is now an array of JS objects representing questions
-	$("#initiatingtext").append("Questions loaded: " + data_questions.resource.questions.question.length + "<br />");
-	
-	// save the initiating text to the console
-	console.debug($("#initiatingtext").html());
-	
-	// once all loaded
-	
-	// all loaded, so move on
-	$("#page_start").fadeOut(0, function() {
-		$("#page_question").fadeIn();
-	});
+    data_questions = load_data_question();
+
+    if (data_questions) {
+        // the data has been loaded
+        $("#initiatingtext").append("Loaded<br />");
+    }
+    else {
+        // couldn't find the data
+        $("#initiatingtext").append("Missing<br />Using the default file<br />");
+
+        // so use the default file
+        data_questions = default_questions;
+    }
+
+    // questions is now an array of JS objects representing questions
+    $("#initiatingtext").append("Questions loaded: " + data_questions.resource.questions.question.length + "<br />");
+
+    // save the initiating text to the console
+    //console.debug($("#initiatingtext").html());
+
+    // once all loaded
+
+    // all loaded, so move on
+    $("#page_start").fadeOut(0, function () {
+        $("#page_question").fadeIn();
+    });
 }
 
-function checkNetworkStatus() 
-{
-	// in version 1.0.0 this will be changed
-	return false;
-	
-    if (navigator.onLine) 
-    {
-    	return true;
-    }
-    else 
-    {
-    	 return false;
-    }
+function checkNetworkStatus() {
+    // in version 1.0.0 this will be changed
+    return false;
+
+    //if (navigator.onLine) {
+    //    return true;
+    //}
+    //else {
+    //    return false;
+    //}
 }
 </script>
 
 </body>
-<script src="phonegap.js"></script>	
+<script src="phonegap.js"></script>
 </html>
