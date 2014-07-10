@@ -37,6 +37,7 @@
     
     <!-- plugins -->
     <plugin name="Device" value="org.apache.cordova.Device" />
+    <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser" />
     
 
     <!-- Icon information -->
