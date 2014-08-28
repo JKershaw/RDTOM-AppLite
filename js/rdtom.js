@@ -94,16 +94,20 @@ function unicorn_end() {
 	$("#main_subtitle").show(0);
 	$('#page_unicorn').hide();
 
-	$('#unicorn_score').html("You scored<br />" + ((unicorn_correct * 100) - (unicorn_wrong * 50)) + " points!");
-
+	var total_score = ((unicorn_correct * 100) - (unicorn_wrong * 50));
+	
 	var unicorn_correct_s = "";
-	var unicorn_wrong_s = "";
 	if (unicorn_correct != 1) {
 		unicorn_correct_s = "s";
 	}
+
+	var unicorn_wrong_s = "";
 	if (unicorn_wrong != 1) {
 		unicorn_wrong_s = "s";
 	}
+
+	$('#unicorn_score').html("You scored<br />" + total_score + " points!");
+
 	$('#unicorn_breakdown').html("You got <strong>" + unicorn_correct + "</strong> question" + unicorn_correct_s + " correct and <strong>" + unicorn_wrong + "</strong> question" + unicorn_wrong_s + " wrong.");
 
 	$('#page_unicorn_results').fadeIn("slow");
