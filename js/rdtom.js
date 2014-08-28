@@ -1,3 +1,18 @@
+var data_questions; // The object which contains all the questions
+
+var have_answered = false;
+var loadingAnimationVar;
+var count = 6;
+var counter; //1000 will run it every 1 second
+var unicorn_correct = 0;
+var unicorn_wrong = 0;
+
+
+// show a question
+var answered = false;
+var correct_answer = 0;
+var section_string;
+
 function goto_minskills_app() {
 	if (device.platform != "Android") {
 		// goto iOS App Store
@@ -23,10 +38,6 @@ function gotostart() {
 	$("#page_start").show();
 }
 
-var count = 6;
-var counter; //1000 will run it every 1 second
-var unicorn_correct = 0;
-var unicorn_wrong = 0;
 
 function initiateunicorn() {
 
@@ -98,14 +109,6 @@ function unicorn_end() {
 	$('#page_unicorn_results').fadeIn("slow");
 }
 
-document.addEventListener("deviceready", function () {
-	navigator.splashscreen.hide();
-});
-var data_questions;
-
-var have_answered = false;
-
-var loadingAnimationVar;
 
 function initiatequestions() {
 	$("#startbutton").hide();
@@ -161,10 +164,6 @@ function loadquestion(unicorn) {
 
 }
 
-// show a question
-var answered = false;
-var correct_answer = 0;
-var section_string;
 
 function showquestion(data, unicorn) {
 	if (typeof (unicorn) == "undefined") {
@@ -225,37 +224,10 @@ function select_answer(selected, unicorn) {
 	}
 }
 
-function save_data_question(data) {
-	localStorage.setItem('data_questions', JSON.stringify(data));
-}
-
-// load the questions from local, return false on failure
-function load_data_question() {
-	try {
-		if (localStorage.getItem('data_questions')) {
-			return JSON.parse(localStorage.getItem('data_questions'));
-		}
-	} catch (err) {
-		return false;
-	}
-}
 
 function loadfromlocal() {
 	// can we use localstorage?
-	$("#initiatingtext").append("Local storage: ");
-
-	data_questions = load_data_question();
-
-	if (data_questions) {
-		// the data has been loaded
-		$("#initiatingtext").append("Loaded<br />");
-	} else {
-		// couldn't find the data
-		$("#initiatingtext").append("Missing<br />Using the default file<br />");
-
-		// so use the default file
-		data_questions = default_questions;
-	}
+	data_questions = default_questions;
 
 	// questions is now an array of JS objects representing questions
 	$("#initiatingtext").append("Questions loaded: " + data_questions.resource.questions.question.length + "<br />");
@@ -266,3 +238,8 @@ function loadfromlocal() {
 		$("#page_question").fadeIn();
 	});
 }
+
+
+document.addEventListener("deviceready", function () {
+	navigator.splashscreen.hide();
+});

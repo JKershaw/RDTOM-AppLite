@@ -2,8 +2,8 @@
     <widget xmlns = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.rollerderbytestomatic.lite"
-        versionCode="21"
-        version   = "0.4.4">
+        versionCode="22"
+        version   = "0.4.5">
 
     <!-- versionCode is optional and Android only -->
     
@@ -37,34 +37,34 @@
     
 
     <!-- Icon information -->
-    <icon src="icon.png" />
+    <icon src="img/icon.png" />
     
-    <icon src="icon-60.png" gap:platform="ios" width="60" height="60" /> 
-    <icon src="icon-60@2x.png" gap:platform="ios" width="120" height="120" /> 
+    <icon src="img/icon-60.png" gap:platform="ios" width="60" height="60" /> 
+    <icon src="img/icon-60@2x.png" gap:platform="ios" width="120" height="120" /> 
     <!-- iPad --> 
-    <icon src="icon-76.png" gap:platform="ios" width="76" height="76" /> 
-    <icon src="icon-76@2x.png" gap:platform="ios" width="152" height="152" /> 
+    <icon src="img/icon-76.png" gap:platform="ios" width="76" height="76" /> 
+    <icon src="img/icon-76@2x.png" gap:platform="ios" width="152" height="152" /> 
     <!-- iPhone / iPod Touch --> 
-    <icon src="icon.png" gap:platform="ios" width="57" height="57" /> 
-    <icon src="icon@2x.png" gap:platform="ios" width="114" height="114" /> 
+    <icon src="img/icon.png" gap:platform="ios" width="57" height="57" /> 
+    <icon src="img/icon@2x.png" gap:platform="ios" width="114" height="114" /> 
     <!-- iPad --> 
-    <icon src="icon-72.png" gap:platform="ios" width="72" height="72" /> 
-    <icon src="icon-72@2x.png" gap:platform="ios" width="144" height="144" />
+    <icon src="img/icon-72.png" gap:platform="ios" width="72" height="72" /> 
+    <icon src="img/icon-72@2x.png" gap:platform="ios" width="144" height="144" />
 
 
-    <icon src="RDTOM_touch_icon.png" gap:platform="android" gap:density="ldpi" />
-	<icon src="RDTOM_touch_icon.png" gap:platform="android" gap:density="mdpi" />
-	<icon src="RDTOM_touch_icon.png" gap:platform="android" gap:density="hdpi" />
-	<icon src="RDTOM_touch_icon.png" gap:platform="android" gap:density="xhdpi" />
+    <icon src="img/RDTOM_touch_icon.png" gap:platform="android" gap:density="ldpi" />
+	<icon src="img/RDTOM_touch_icon.png" gap:platform="android" gap:density="mdpi" />
+	<icon src="img/RDTOM_touch_icon.png" gap:platform="android" gap:density="hdpi" />
+	<icon src="img/RDTOM_touch_icon.png" gap:platform="android" gap:density="xhdpi" />
 
-	<icon src="icon.png" gap:platform="blackberry" />
+	<icon src="img/icon.png" gap:platform="blackberry" />
 	
 	<!--  Splash screens -->
-	<gap:splash src="splash.png"/>
-	<gap:splash src="splash_320_480.png" width="320" height="480" />
-	<gap:splash src="splash_1024_768.png" width="1024" height="768" />
-	<gap:splash src="splash_768_1024.png" width="768" height="1024" />
-    <gap:splash src="splash-568h.png" gap:platform="ios" width="640" height="1136" />
+	<gap:splash src="img/splash.png"/>
+	<gap:splash src="img/splash_320_480.png" width="320" height="480" />
+	<gap:splash src="img/splash_1024_768.png" width="1024" height="768" />
+	<gap:splash src="img/splash_768_1024.png" width="768" height="1024" />
+    <gap:splash src="img/splash-568h.png" gap:platform="ios" width="640" height="1136" />
 
 
 </widget>
