@@ -25,6 +25,8 @@
     <author href="http://rollerderbytestomatic.com/" email="contact@rollerderbytestomatic.com">
         John Kershaw
     </author>
+
+    <gap:plugin name="org.apache.cordova.device" version="0.2.12" />
     
     <access origin="https://play.google.com" browserOnly="true" />
     <access origin="itunes.apple.com" browserOnly="true" />
