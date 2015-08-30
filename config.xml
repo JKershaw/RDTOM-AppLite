@@ -2,15 +2,15 @@
     <widget xmlns = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.rollerderbytestomatic.lite"
-        versionCode="22"
-        version   = "0.4.5">
+        versionCode="23"
+        version   = "0.4.6">
 
     <!-- versionCode is optional and Android only -->
     
 	<preference name="android-minSdkVersion" value="7" />
 	<preference name="android-targetSdkVersion" value="17" />
 	
-	<preference name="phonegap-version" value="2.9.0" />
+	<preference name="phonegap-version" value="3.7.0" />
 	
 	<preference name="orientation" value="default" />
 	
